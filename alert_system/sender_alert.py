@@ -1,5 +1,5 @@
 class AlertSender:
     def __call__(self, alert_str: str):
-        print(alert_str)
+        print(alert_str, flush=True)
 
-        # TODO: make send to email
+        # TODO: maybe what even imaging

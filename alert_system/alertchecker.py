@@ -2,11 +2,13 @@ import pandas as pd
 from sender_alert import AlertSender
 
 class AlertSystem:
-    def __init__(self, name_of_file, valid_time = 1, check_with_code_zero = False) -> None:
+    def __init__(self, name_of_file, valid_time = 1, check_with_code_zero = False, with_check_df = False) -> None:
         self.name_of_file = name_of_file
         self.valid_time = valid_time
         self.check_with_code_zero = check_with_code_zero
-        self.__init_dataframe()
+        self.data = pd.read_csv(self.name_of_file, names=['error_code', 'error_message', 'severity', 'log_location', 'mode', 'model', 'graphics', 'session_id', 'sdkv', 'test_mode', 'flow_id', 'flow_type', 'sdk_date', 'publisher_id', 'game_id', 'bundle_id', 'appv', 'language', 'os', 'adv_id', 'gdpr', 'ccpa', 'country_code', 'date'])
+        if with_check_df:
+            self.__init_dataframe()
 
         self.data['date'] = pd.to_datetime(self.data['date'], unit='s')
         if self.check_with_code_zero:
@@ -32,8 +34,6 @@ class AlertSystem:
         print('execute hour')
 
     def __init_dataframe(self):
-        self.data = pd.read_csv(self.name_of_file, names=['error_code', 'error_message', 'severity', 'log_location', 'mode', 'model', 'graphics', 'session_id', 'sdkv', 'test_mode', 'flow_id', 'flow_type', 'sdk_date', 'publisher_id', 'game_id', 'bundle_id', 'appv', 'language', 'os', 'adv_id', 'gdpr', 'ccpa', 'country_code', 'date'])
-
         while(True):
             if ((self.data.sort_values('date', ascending=False)['date'].iloc[0] - \
                 self.data.sort_values('date')['date'].iloc[0]) / 3600) < self.valid_time:

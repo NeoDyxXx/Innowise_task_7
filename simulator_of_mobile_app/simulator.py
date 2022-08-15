@@ -25,7 +25,7 @@ def main():
 
     for dataframe in list_of_dataframes:
         dataframe.to_csv(os.path.join(DIRECTORY_OF_LOGS, 'log_' + str(count) + '.csv'), index=False)
-        print('log_' + str(count) + '.csv created.')
+        print('log_' + str(count) + '.csv created.', flush=True)
         count += 1
         time.sleep(5)
 

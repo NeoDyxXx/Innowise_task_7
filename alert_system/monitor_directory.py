@@ -1,6 +1,9 @@
 from watchdog.observers import Observer
 from watchdog.events import FileSystemEventHandler
 from alertchecker import AlertSystem
+import os
+
+DEFAULT_DIR = os.getenv('DEFAULT_DIR', '../logs/')
 
 
 class MyHandler(FileSystemEventHandler):
@@ -12,7 +15,7 @@ class MyHandler(FileSystemEventHandler):
 
 event_handler = MyHandler()
 observer = Observer()
-observer.schedule(event_handler, path='../logs/', recursive=False)
+observer.schedule(event_handler, path=DEFAULT_DIR, recursive=False)
 observer.start()
 
 while True:

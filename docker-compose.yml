@@ -1,0 +1,16 @@
+version: "3"
+
+services:
+  simulator:
+    image: simulator:latest
+    volumes:
+      - log_data:/app/logs
+
+  alert_system:
+    image: alert_system:latest
+    volumes:
+      - log_data:/app/logs
+
+
+volumes:
+  log_data:
